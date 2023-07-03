@@ -25,5 +25,23 @@ class MessageDao {
             }
         });
     }
+    static insertMessage(username, message, roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const test = new MessageModel_1.MessageModel({
+                    username: username,
+                    message: message,
+                    roomId: roomId
+                });
+                yield test.save();
+                if (!test._id)
+                    throw new Error('No message delete with id');
+                return true;
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+        });
+    }
 }
 exports.default = MessageDao;

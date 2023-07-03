@@ -25,10 +25,9 @@ class MessageController {
             const messageIdToDelete: string = req.params.id
             Logger.info('[Controller][deleteMessageById] Deleting message by id with params', messageIdToDelete)
             //TODO check if authenticated
-            //todo check if good payload
             await MessageValidator.deleteMessageById(messageIdToDelete)
             await MessageModel.messageIdToDelete(messageIdToDelete)
-            res.send('Delete Messages').status(200)
+            res.send('Deleted Messages').status(200)
         }catch (e: any) {
             Logger.warn(e.message)
             res.send('Bad Request').status(400)
@@ -36,7 +35,20 @@ class MessageController {
     }
 
     static async insertMessage(req: Request, res: Response) {
-        res.send('Post Messages').status(200)
+        try {
+            const {username, message, roomId} = req.body
+            Logger.info('[Controller][InsertMessage] Inserting message with params', username, message, roomId)
+            await MessageValidator.insertMessage({username, message, roomId})
+            await MessageModel.insertMessage(username, message, roomId)
+            res.send({
+                "username":username,
+                "message": message,
+                "roomId": roomId
+            }).status(200)
+        }catch (e: any) {
+            Logger.warn(e.message)
+            res.send('Bad Request').status(400)
+        }
     }
 
     static async updateMessagebyId(req: Request, res: Response) {

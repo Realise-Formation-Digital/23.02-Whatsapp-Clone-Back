@@ -33,5 +33,24 @@ class MessageModel {
             }
         });
     }
+    static insertMessage(username, roomId, message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                Logger_1.default.info('[Model][InsertMessage] Inserting message with params', username, message, roomId);
+                //get room id to send message to each other
+                const result = yield MessageDao_1.default.insertMessage(username, roomId, message);
+                if (result)
+                    Socket_1.default.emit('inserted-message', {
+                        roomId: roomId,
+                        message: message,
+                        username: username
+                    });
+            }
+            catch (e) {
+                Logger_1.default.warn(e);
+                throw new Error(e);
+            }
+        });
+    }
 }
 exports.default = MessageModel;

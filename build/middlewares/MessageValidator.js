@@ -17,6 +17,11 @@ const Logger_1 = __importDefault(require("../libs/Logger"));
 const messageDeleteSchema = joi_1.default.object({
     _id: joi_1.default.string()
 });
+const messageInsertSchema = joi_1.default.object({
+    username: joi_1.default.string(),
+    roomId: joi_1.default.string(),
+    message: joi_1.default.string()
+});
 class MessageValidator {
     static deleteMessageById(payload) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -25,7 +30,21 @@ class MessageValidator {
                 const test = yield messageDeleteSchema.validate({ _id: payload });
                 if (test.error)
                     throw new Error("validation Error");
-                return yield messageDeleteSchema.validate({ _id: payload });
+                return true;
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+        });
+    }
+    static insertMessage(payload) {
+        return __awaiter(this, void 0, void 0, function* () {
+            Logger_1.default.info('[Controller][insertMessage] Inserting message by id with params', payload);
+            try {
+                const test = yield messageInsertSchema.validate(payload);
+                if (test.error)
+                    throw new Error("validation Error");
+                return true;
             }
             catch (e) {
                 throw new Error(e);
