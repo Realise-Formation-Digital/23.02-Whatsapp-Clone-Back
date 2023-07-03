@@ -5,6 +5,6 @@ const router = express.Router();
 router.get("/all", MessageController.getMessagesbyRoomId)
 router.get("/:id", MessageController.getMessageById)
 router.post("/", MessageController.insertMessage)
-router.delete("/", MessageController.deleteMessageByMessageId)
+router.delete("/:id", MessageController.deleteMessageById)
 router.put("/", MessageController.updateMessagebyId)
 export default router;

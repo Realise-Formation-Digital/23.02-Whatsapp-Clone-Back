@@ -3,15 +3,15 @@ class Logger {
 
     private static logger = pino({});
 
-    static debug(message: string){
+    static debug(...message: string[]){
         if (!this.logger) new Logger()
         this.logger.debug(message)
     }
-    static info(message: string){
+    static info(...message: string[]){
         if (!this.logger) new Logger()
         this.logger.info(message)
     }
-    static warn(message: string){
+    static warn(...message: string[]){
         if (!this.logger) new Logger()
         this.logger.warn(message)
     }

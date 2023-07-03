@@ -9,6 +9,6 @@ const router = express_1.default.Router();
 router.get("/all", MessageController_1.default.getMessagesbyRoomId);
 router.get("/:id", MessageController_1.default.getMessageById);
 router.post("/", MessageController_1.default.insertMessage);
-router.delete("/", MessageController_1.default.deleteMessageByMessageId);
+router.delete("/:id", MessageController_1.default.deleteMessageById);
 router.put("/", MessageController_1.default.updateMessagebyId);
 exports.default = router;

@@ -5,17 +5,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const pino_1 = __importDefault(require("pino"));
 class Logger {
-    static debug(message) {
+    static debug(...message) {
         if (!this.logger)
             new Logger();
         this.logger.debug(message);
     }
-    static info(message) {
+    static info(...message) {
         if (!this.logger)
             new Logger();
         this.logger.info(message);
     }
-    static warn(message) {
+    static warn(...message) {
         if (!this.logger)
             new Logger();
         this.logger.warn(message);
