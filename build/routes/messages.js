@@ -4,20 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const MessageController_1 = __importDefault(require("../controllers/MessageController"));
 const router = express_1.default.Router();
-router.get("/message/{id}", (req, res) => {
-    res.send('Get Message by id').status(200);
-});
-router.get("/messages", (req, res) => {
-    res.send('Get Messages').status(200);
-});
-router.post("/message", (req, res) => {
-    res.send('Post Messages').status(200);
-});
-router.delete("/message", (req, res) => {
-    res.send('Delete Messages').status(200);
-});
-router.put("/message", (req, res) => {
-    res.send('Put Messages').status(200);
-});
+router.get("/all", MessageController_1.default.getMessagesbyRoomId);
+router.get("/:id", MessageController_1.default.getMessageById);
+router.post("/", MessageController_1.default.insertMessage);
+router.delete("/", MessageController_1.default.deleteMessageByMessageId);
+router.put("/", MessageController_1.default.updateMessagebyId);
 exports.default = router;
