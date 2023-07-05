@@ -1,6 +1,5 @@
 import { Schema, model , Types} from 'mongoose';
 import IRoom from "../../interfaces/IRoom";
-import IMessage from "../../interfaces/IMessage";
 
 enum roomType {
     'SingleChat', 'GroupChat'

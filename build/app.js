@@ -9,14 +9,16 @@ const messages_1 = __importDefault(require("./routes/messages"));
 const rooms_1 = __importDefault(require("./routes/rooms"));
 require("dotenv/config");
 require("./libs/Socket");
-const db_1 = __importDefault(require("./db"));
 const Logger_1 = __importDefault(require("./libs/Logger"));
+const RoomDao_1 = __importDefault(require("./db/RoomDao"));
+const MessageDao_1 = __importDefault(require("./db/MessageDao"));
 const app = (0, express_1.default)();
 new Logger_1.default();
-db_1.default.connect();
 const PORT = process.env.SERVER_PORT || '3001';
 //Configuration
 app.use(express_1.default.json());
+RoomDao_1.default.initializeConnection();
+MessageDao_1.default.initializeConnection();
 //Routes
 app.use('/users', users_1.default);
 app.use('/messages', messages_1.default);

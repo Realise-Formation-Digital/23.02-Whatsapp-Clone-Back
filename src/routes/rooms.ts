@@ -1,4 +1,5 @@
 import express, { Request, Response } from 'express';
+import RoomController from "../controllers/RoomController";
 const router = express.Router();
 
 router.get("/:id", (req: Request, res :Response) => {
@@ -9,9 +10,7 @@ router.get("/rooms", (req: Request, res :Response) => {
     res.send('Get Messages').status(200)
 })
 
-router.post("/", (req: Request, res :Response) => {
-    res.send('Post Messages').status(200)
-})
+router.post("/", RoomController.createRoom)
 
 router.delete("/", (req: Request, res :Response) => {
     res.send('Delete Messages').status(200)

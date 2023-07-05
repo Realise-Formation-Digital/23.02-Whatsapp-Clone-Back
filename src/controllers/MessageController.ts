@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import Logger from "../libs/Logger";
-import io from "../libs/Socket";
 import MessageValidator from "../middlewares/MessageValidator";
 import MessageModel from "../models/MessageModel";
 /**

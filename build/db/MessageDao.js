@@ -10,7 +10,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const MessageModel_1 = require("./models/MessageModel");
+const mongodb_1 = require("mongodb");
 class MessageDao {
+    static initializeConnection() {
+        const url = process.env.MONGODB_MESSASGES_CONNECTION_STRING;
+        this.client = new mongodb_1.MongoClient(url);
+        this.database = this.client.db('Messages');
+    }
+    static createMessageCollection(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield this.database.createCollection(id);
+            }
+            catch (e) {
+                throw new Error(e);
+            }
+        });
+    }
     static deleteMessageById(messageIdToDelete) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
