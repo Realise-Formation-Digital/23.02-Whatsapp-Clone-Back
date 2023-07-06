@@ -11,7 +11,7 @@ class RoomController {
       //TODO check if authenticated
       //TODO Validator
       const result = await RoomModel.createRoom(roomName, type, admins, guests);
-      res.send('Room Created').status(200)
+      res.send(result).status(200)
     }catch (e) {
       console.error(e)
       res.send('Hai fatto na cazzata').status(400)

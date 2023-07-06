@@ -3,6 +3,7 @@ import RoomDao from "../db/RoomDao";
 import MessageDao from "../db/MessageDao";
 import {ObjectId} from "mongodb";
 import RoomController from "../controllers/RoomController";
+import io from "../libs/Socket";
 
 
 class RoomModel{
@@ -17,6 +18,7 @@ class RoomModel{
       console.log(roomId)
       await MessageDao.createMessageCollection(roomId);
       const roomCreated  = await RoomDao.findRoomById(roomId)
+      io.emit('room-created', roomCreated)
       return roomCreated
     }catch (e: any) {
       throw new Error(e)
