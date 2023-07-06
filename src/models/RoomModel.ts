@@ -10,8 +10,7 @@ class RoomModel{
     try {
       const resultRoom: InsertOneResult<Document> = await RoomDao.createRoom(roomName, type, admins, guests)
       if (!resultRoom.insertedId) throw new Error('Room not created')
-      const roomId: string = resultRoom.insertedId.valueOf() as string
-      console.log("ciao", roomId, resultRoom.insertedId)
+      const roomId: string = resultRoom.insertedId.toString() as string
       await MessageDao.createMessageCollection(roomId);
       const roomCreated  = await RoomDao.findRoomById(roomId)
       io.emit('room-created', roomCreated)
