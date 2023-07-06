@@ -1,10 +1,7 @@
 import {InsertOneResult} from "mongodb";
 import RoomDao from "../db/RoomDao";
 import MessageDao from "../db/MessageDao";
-import {ObjectId} from "mongodb";
-import RoomController from "../controllers/RoomController";
 import io from "../libs/Socket";
-
 
 class RoomModel{
 
