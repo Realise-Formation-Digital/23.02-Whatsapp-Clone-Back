@@ -1,4 +1,5 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application } from 'express';
+
 import userRoutes from './routes/users';
 import messageRoutes from './routes/messages';
 import roomRoutes from  './routes/rooms'
@@ -15,6 +16,7 @@ const PORT: string  = process.env.SERVER_PORT || '3001';
 app.use(express.json());
 RoomDao.initializeConnection()
 MessageDao.initializeConnection()
+
 //Routes
 app.use('/users', userRoutes);
 app.use('/messages', messageRoutes);

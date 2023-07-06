@@ -14,7 +14,7 @@ class MessageController {
         res.send('Get Message by id').status(200)
     }
 
-    static async getMessagesbyRoomId(req: Request, res: Response) {
+    static async getMessagesByRoomId(req: Request, res: Response) {
         //TODO check if authenticated
         res.send('Get Messages').status(200)
     }

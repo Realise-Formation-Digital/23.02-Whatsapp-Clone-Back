@@ -4,7 +4,7 @@ import RoomModel from "../models/RoomModel";
 
 class RoomController {
 
-  static async createRoom(req: Request, res: Response) {
+  static async createRoom(req: Request, res: Response): Promise<void> {
     try {
       const {roomName, type, admins, guests} = req.body
       console.log('[Controller][createRoom] Creating room with params', roomName, type, admins, guests)
@@ -17,6 +17,16 @@ class RoomController {
       res.send('Hai fatto na cazzata').status(400)
     }
   }
+
+  static async getRoomsAndMessages (req: Request, res: Response): Promise<void> {
+    try {
+
+    }catch (e) {
+      console.error(e)
+      res.send('Hai fatto na cazzata').status(400)
+    }
+  }
+
 }
 
 export default RoomController
