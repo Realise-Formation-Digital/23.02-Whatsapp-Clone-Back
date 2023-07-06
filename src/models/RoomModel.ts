@@ -8,7 +8,6 @@ import io from "../libs/Socket";
 
 class RoomModel{
 
-
   static async createRoom(roomName: string, type: string, admins: string[], guests:string[]): Promise<Document | null>{
     console.log('[Model][createRoom] Creating room with params', roomName, type, admins, guests)
     try {

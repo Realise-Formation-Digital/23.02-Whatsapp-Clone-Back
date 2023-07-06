@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const MessageModel_1 = require("./models/MessageModel");
 const mongodb_1 = require("mongodb");
 class MessageDao {
     static initializeConnection() {
@@ -30,10 +29,6 @@ class MessageDao {
     static deleteMessageById(messageIdToDelete) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const test = yield MessageModel_1.MessageModel.deleteOne({ id: messageIdToDelete });
-                console.log(test);
-                if (test.deletedCount !== 1)
-                    throw new Error('No message delete with id');
                 return true;
             }
             catch (e) {
@@ -44,14 +39,6 @@ class MessageDao {
     static insertMessage(username, message, roomId) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const test = new MessageModel_1.MessageModel({
-                    username: username,
-                    message: message,
-                    roomId: roomId
-                });
-                yield test.save();
-                if (!test._id)
-                    throw new Error('No message delete with id');
                 return true;
             }
             catch (e) {
