@@ -2,6 +2,8 @@ import Logger from "../libs/Logger";
 import MessageDao from "../db/MessageDao";
 import io from "../libs/Socket";
 import messageDao from "../db/MessageDao";
+import IMessage from "../interfaces/IMessage";
+import {InsertOneResult} from "mongodb";
 
 class MessageModel {
     static async messageIdToDelete(messageIdToDelete: string){
@@ -17,16 +19,14 @@ class MessageModel {
             throw new Error(e)
         }
     }
-    static async insertMessage(username: string, roomId: string, message: string){
+    static async insertMessage(sender: string, message: string, roomId: string): Promise<Document | null>{
         try {
-            Logger.info('[Model][InsertMessage] Inserting message with params', username, message, roomId)
+            console.log('[Model][InsertMessage] Inserting message with params', sender, message, roomId)
             //get room id to send message to each other
-            const result: boolean = await MessageDao.insertMessage(username, roomId, message)
-            if (result) io.emit('inserted-message', {
-                roomId: roomId,
-                message: message,
-                username: username
-            });
+            const messageInserted: InsertOneResult<Document> = await MessageDao.insertMessage(sender, message, roomId)
+            const messageFound = await MessageDao.findMessageByRoomIdAndMessageId(roomId, messageInserted.insertedId.toString())
+            if (messageInserted.insertedId) io.emit('new-message', messageFound);
+            return messageFound
         }catch (e: any) {
             Logger.warn(e)
             throw new Error(e)

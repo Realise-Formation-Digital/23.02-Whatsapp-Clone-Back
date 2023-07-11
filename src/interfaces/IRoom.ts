@@ -1,3 +1,5 @@
+import {ObjectId} from 'mongodb'
+import IMessage from "./IMessage";
 
 //TODO
 enum roomType {
@@ -5,11 +7,12 @@ enum roomType {
 }
 
 interface IRoom {
-    _id: Types.ObjectId,
+    _id: ObjectId,
     roomType: roomType,
-    admins: Types.Array<string>,
-    guests: Types.Array<string>,
-    messages:
+    admins: String[],
+    guests: String[],
+    messages: IMessage[],
+    avatar: String
 }
 
 export default IRoom

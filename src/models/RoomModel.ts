@@ -12,9 +12,20 @@ class RoomModel{
       if (!resultRoom.insertedId) throw new Error('Room not created')
       const roomId: string = resultRoom.insertedId.toString() as string
       await MessageDao.createMessageCollection(roomId);
-      const roomCreated  = await RoomDao.findRoomById(roomId)
+      const roomCreated: Document | null  = await RoomDao.findRoomById(roomId)
       io.emit('room-created', roomCreated)
       return roomCreated
+    }catch (e: any) {
+      throw new Error(e)
+    }
+  }
+
+  static async createFirstRoomForBoot(): Promise<void> {
+    try {
+      const foundFirstRoom: Document[] | null = await RoomDao.findAllRooms()
+      if(foundFirstRoom && foundFirstRoom.length !== 0) return
+      console.log('[Model][createFirstRoomForBoot] Found', foundFirstRoom)
+      await this.createRoom('First Conversation', 'SingleChat', ['MarcoTribuz'], [])
     }catch (e: any) {
       throw new Error(e)
     }

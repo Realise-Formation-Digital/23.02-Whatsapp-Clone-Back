@@ -8,14 +8,17 @@ import './libs/Socket'
 import Logger from "./libs/Logger";
 import RoomDao from "./db/RoomDao";
 import MessageDao from "./db/MessageDao";
+import RoomModel from "./models/RoomModel";
 const app: Application = express();
 new Logger()
 const PORT: string  = process.env.SERVER_PORT || '3001';
 
 //Configuration
 app.use(express.json());
+
 RoomDao.initializeConnection()
 MessageDao.initializeConnection()
+RoomModel.createFirstRoomForBoot();
 
 //Routes
 app.use('/users', userRoutes);

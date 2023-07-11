@@ -5,7 +5,7 @@ const messageDeleteSchema: Joi.ObjectSchema = Joi.object({
     _id: Joi.string()
 })
 const messageInsertSchema: Joi.ObjectSchema = Joi.object({
-    username: Joi.string(),
+    sender: Joi.string(),
     roomId: Joi.string(),
     message: Joi.string()
 })
@@ -22,7 +22,7 @@ class MessageValidator {
     }
 
     static async insertMessage(payload: any): Promise<boolean>{
-        Logger.info('[Controller][insertMessage] Inserting message by id with params', payload)
+        console.log('[MessageValidator][insertMessage] Inserting message by id with params', payload)
         try {
             const test= await messageInsertSchema.validate(payload)
             if(test.error) throw new Error("validation Error")

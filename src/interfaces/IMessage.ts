@@ -1,5 +1,5 @@
 interface IMessage {
-    username: string,
+    sender: string,
     message: string,
     roomId: string,
     ts: number

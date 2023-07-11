@@ -36,6 +36,15 @@ class RoomDao {
     }
   }
 
+  static async findAllRooms(): Promise<Document[] | null> {
+    try {
+      const result: WithId<any> = await this.collection.find({}).toArray()
+      return result
+    }catch (e: any) {
+      throw new Error(e)
+    }
+  }
+
   static async updateRoom() {
     try {
       

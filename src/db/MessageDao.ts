@@ -1,4 +1,4 @@
-import {Db, MongoClient} from "mongodb";
+import {Db, InsertOneResult, MongoClient, ObjectId, WithId} from "mongodb";
 
 class MessageDao {
 
@@ -26,9 +26,26 @@ class MessageDao {
             throw new Error(e)
         }
     }
-    static async insertMessage (username: string, message: string, roomId: string): Promise<boolean>{
+
+    static async findMessageByRoomIdAndMessageId(roomId: string, messageId: string): Promise<Document | null> {
+        console.log("[MessageDao][findMessageByRoomIdAndMessageId] Finding message by room id and message id", roomId, messageId)
         try {
-            return true
+            const result: WithId<any> | null  = await this.database.collection(roomId).findOne({_id : new ObjectId(messageId)})
+            return result
+        }catch (e: any) {
+            throw new Error(e)
+        }
+    }
+
+    static async insertMessage (sender: string, message: string, roomId: string): Promise<InsertOneResult<Document>>{
+        try {
+            console.log('[MessageDao][InsertMessage] Inserting message with params', sender, message, roomId)
+            const result: WithId<any> = await this.database.collection(roomId).insertOne({
+                message : message,
+                sender: sender,
+                ts: new Date().getTime()
+            })
+            return result
         }catch (e: any) {
             throw new Error(e)
         }

@@ -35,22 +35,18 @@ class MessageController {
 
     static async insertMessage(req: Request, res: Response) {
         try {
-            const {username, message, roomId} = req.body
-            Logger.info('[Controller][InsertMessage] Inserting message with params', username, message, roomId)
-            await MessageValidator.insertMessage({username, message, roomId})
-            await MessageModel.insertMessage(username, message, roomId)
-            res.send({
-                "username":username,
-                "message": message,
-                "roomId": roomId
-            }).status(200)
+            const {sender, message, roomId} = req.body
+            console.log('[MessageController][InsertMessage] Inserting message with params', sender, message, roomId)
+            await MessageValidator.insertMessage({sender, message, roomId})
+            const result = await MessageModel.insertMessage(sender, message, roomId)
+            res.send(result).status(200)
         }catch (e: any) {
             Logger.warn(e.message)
             res.send('Bad Request').status(400)
         }
     }
 
-    static async updateMessagebyId(req: Request, res: Response) {
+    static async updateMessageById(req: Request, res: Response) {
         res.send('Put Messages').status(200)
     }
 }
