@@ -7,7 +7,6 @@ class UserModel {
     try {
       console.log('[UserModel][login] Logging in with params', username)
       const userFound: Document[] = await UserDao.findUserByUsername(username)
-      console.log('userFound', userFound)
       if (userFound.length === 0) {
         const userCreated: InsertOneResult = await this.createUser(username)
         //FIXME this is just for the version 1
