@@ -8,18 +8,18 @@ import MessageModel from "../models/MessageModel";
  * @author Marco Tribuzio
  */
 class MessageController {
-    static async getMessageById(req: Request, res: Response){
+    static async getMessageById(req: Request, res: Response): Promise<void>{
         //TODO check if authenticated
         Logger.info('message')
         res.send('Get Message by id').status(200)
     }
 
-    static async getMessagesByRoomId(req: Request, res: Response) {
+    static async getMessagesByRoomId(req: Request, res: Response): Promise<void> {
         //TODO check if authenticated
         res.send('Get Messages').status(200)
     }
 
-    static async deleteMessageById(req: Request, res: Response){
+    static async deleteMessageById(req: Request, res: Response): Promise<void>{
         try {
             const messageIdToDelete: string = req.params.id
             Logger.info('[Controller][deleteMessageById] Deleting message by id with params', messageIdToDelete)
