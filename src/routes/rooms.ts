@@ -2,12 +2,10 @@ import express, { Request, Response } from 'express';
 import RoomController from "../controllers/RoomController";
 const router = express.Router();
 
+router.get("/all/:username", RoomController.getRoomsAndMessages)
+
 router.get("/:id", (req: Request, res :Response) => {
     res.send('Get Message by id').status(200)
-})
-
-router.get("/rooms", (req: Request, res :Response) => {
-    res.send('Get Messages').status(200)
 })
 
 router.post("/", RoomController.createRoom)

@@ -1,4 +1,5 @@
 import {Document, MongoClient, Db, Collection, InsertOneResult, WithId, ObjectId, UpdateResult} from "mongodb";
+import {IRoom, IRoomMongoDb} from "../interfaces/IRoom";
 
 class RoomDao {
   static client: MongoClient
@@ -31,6 +32,16 @@ class RoomDao {
     console.log('[UserDao][createRoom] Creating room with params', roomId)
     try {
       const result: WithId<any> = await this.collection.findOne({_id: new ObjectId(roomId)})
+      return result
+    }catch (e: any) {
+      throw new Error(e)
+    }
+  }
+
+  static async findRoomsByUserId(userId: string): Promise<IRoomMongoDb[]>{
+    console.log('[UserDao][createRoom] Creating room with params', userId)
+    try {
+      const result: WithId<any> = await this.collection.find({admins: userId}).toArray()
       return result
     }catch (e: any) {
       throw new Error(e)

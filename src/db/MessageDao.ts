@@ -1,4 +1,5 @@
 import {Db, InsertOneResult, MongoClient, ObjectId, WithId} from "mongodb";
+import IMessage from "../interfaces/IMessage";
 
 class MessageDao {
 
@@ -45,6 +46,15 @@ class MessageDao {
                 sender: sender,
                 ts: new Date().getTime()
             })
+            return result
+        }catch (e: any) {
+            throw new Error(e)
+        }
+    }
+    static async findMessageByRoomId (roomId: string): Promise<IMessage[]>{
+        console.log('[MessageDao][findMessageById] Finding messages by room id with params', roomId)
+        try {
+            const result: WithId<any> = await this.database.collection(roomId).find().toArray()
             return result
         }catch (e: any) {
             throw new Error(e)

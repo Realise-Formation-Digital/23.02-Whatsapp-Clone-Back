@@ -1,4 +1,5 @@
 import {Collection, Db, InsertOneResult, MongoClient, ObjectId, WithId} from "mongodb";
+import IUser from "../interfaces/IUser";
 
 class UserDao {
   static client: MongoClient
@@ -10,7 +11,7 @@ class UserDao {
     this.database = this.client.db('Users')
     this.collection = this.database.collection('Users')
   }
-  static async findUserById(userId: string): Promise<Document | null> {
+  static async findUserById(userId: string): Promise<IUser> {
     try {
       console.log('[UserDao][findUserById] Finding user by id with params', userId)
       const result: WithId<any> = await this.collection.findOne({_id: new ObjectId(userId)})
@@ -20,10 +21,10 @@ class UserDao {
     }
   }
 
-  static async findUserByUsername(username: string): Promise <Document[]>{
+  static async findUserByUsername(username: string): Promise <IUser>{
     try {
       console.log('[UserDao][findUserByUsername] Finding user by username with params', username)
-      const result: WithId<any> = await this.collection.find({username: username}).toArray()
+      const result: WithId<any> = await this.collection.findOne({username: username})
       return result
     }catch (e: any) {
       throw new Error(e)

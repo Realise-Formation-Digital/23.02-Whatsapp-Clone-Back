@@ -1,13 +1,14 @@
 import UserDao from "../db/UserDao";
 import {InsertOneResult, UpdateResult, Document} from "mongodb";
 import RoomDao from "../db/RoomDao";
+import IUser from "../interfaces/IUser";
 
 class UserModel {
   static async login(username: string): Promise<Document>{
     try {
       console.log('[UserModel][login] Logging in with params', username)
-      const userFound: Document[] = await UserDao.findUserByUsername(username)
-      if (userFound.length === 0) {
+      const userFound: IUser = await UserDao.findUserByUsername(username)
+      if (userFound) {
         const userCreated: InsertOneResult = await this.createUser(username)
         //FIXME this is just for the version 1
         const roomsFound: Document[] = await RoomDao.findAllRooms()

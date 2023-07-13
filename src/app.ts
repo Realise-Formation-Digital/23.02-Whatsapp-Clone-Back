@@ -31,8 +31,8 @@ RoomModel.createFirstRoomForBoot();
 
 //Routes
 app.use('/users', userRoutes);
-app.use('/messages', messageRoutes);
 app.use('/rooms', roomRoutes);
+app.use('/messages', messageRoutes);
 
 app.listen(PORT, (): void => {
   console.log('SERVER IS UP ON PORT:', PORT);
