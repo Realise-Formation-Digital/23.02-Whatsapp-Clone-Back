@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import {Document} from "mongodb";
 import UserModel from "../models/UserModel";
 
 class UserController {
@@ -8,8 +9,8 @@ class UserController {
       const {username} = req.body
       //todo validator
       console.log('[UserController][Login] Logging in with params', username)
-      const result = await UserModel.login(username)
-      res.send('ok').status(200)
+      const result: Document = await UserModel.login(username)
+      res.send(result).status(200)
     }catch (e: any) {
       throw new Error(e)
     }
