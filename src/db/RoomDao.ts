@@ -1,4 +1,4 @@
-import {MongoClient, Db, Collection, InsertOneResult, WithId, ObjectId, UpdateResult} from "mongodb";
+import {Document, MongoClient, Db, Collection, InsertOneResult, WithId, ObjectId, UpdateResult} from "mongodb";
 
 class RoomDao {
   static client: MongoClient
@@ -9,10 +9,11 @@ class RoomDao {
     this.client = new MongoClient(url)
     this.database = this.client.db('Rooms')
     this.collection = this.database.collection('Rooms')
+    this.collection.createIndex( {name: 1}, { unique: true } )
   }
 
   static async createRoom(roomName: string, type: string, admins: string[], guests:string[]): Promise<InsertOneResult<Document>>{
-    console.log('[DAO][createRoom] Creating room with params', roomName, type, admins, guests)
+    console.log('[UserDao][createRoom] Creating room with params', roomName, type, admins, guests)
     try {
       const result: InsertOneResult<Document> = await this.collection.insertOne({
         type: type,
@@ -36,7 +37,7 @@ class RoomDao {
     }
   }
 
-  static async findAllRooms(): Promise<Document[] | null> {
+  static async findAllRooms(): Promise<Document[]> {
     console.log('[UserDao][findAllRooms] Finding all rooms')
     try {
       const result: WithId<any> = await this.collection.find({}).toArray()
