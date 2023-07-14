@@ -7,12 +7,13 @@ class UserModel {
   static async login(username: string): Promise<Document>{
     try {
       console.log('[UserModel][login] Logging in with params', username)
-      const userFound: IUser = await UserDao.findUserByUsername(username)
+      let userFound: IUser = await UserDao.findUserByUsername(username)
       if (!userFound) {
         const userCreated: InsertOneResult = await this.createUser(username)
         //FIXME this is just for the version 1
         const roomsFound: Document[] = await RoomDao.findAllRooms()
         const updatedRoom: UpdateResult = await this.insertUserInRoom(userCreated.insertedId.toString(), roomsFound && roomsFound[0]._id.toString())
+        userFound = await UserDao.findUserByUsername(username)
       }
       return userFound
     }catch (e: any) {
