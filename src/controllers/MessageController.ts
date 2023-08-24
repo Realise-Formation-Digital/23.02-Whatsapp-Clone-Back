@@ -19,13 +19,14 @@ class MessageController {
         res.send('Get Messages').status(200)
     }
 
-    static async deleteMessageById(req: Request, res: Response): Promise<void>{
+    static async deleteMessageByIdAndRoomId(req: Request, res: Response): Promise<void>{
         try {
-            const messageIdToDelete: string = req.params.id
-            Logger.info('[Controller][deleteMessageById] Deleting message by id with params', messageIdToDelete)
+            const messageId: string = req.params.id
+            const roomId: string = req.body.roomId
+            console.log('[Controller][deleteMessageByIdAndRoomId] Deleting message by id and room id with params', messageId, roomId)
             //TODO check if authenticated
-            await MessageValidator.deleteMessageById(messageIdToDelete)
-            await MessageModel.messageIdToDelete(messageIdToDelete)
+            await MessageValidator.deleteMessageById(messageId, roomId)
+            await MessageModel.deleteMessageByIdAndRoomId(messageId, roomId)
             res.send('Deleted Messages').status(200)
         }catch (e: any) {
             Logger.warn(e.message)

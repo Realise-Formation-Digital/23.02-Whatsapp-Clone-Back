@@ -2,7 +2,8 @@ import Joi from "joi";
 import Logger from "../libs/Logger";
 
 const messageDeleteSchema: Joi.ObjectSchema = Joi.object({
-    _id: Joi.string()
+    messageId: Joi.string(),
+    roomId: Joi.string()
 })
 const messageInsertSchema: Joi.ObjectSchema = Joi.object({
     sender: Joi.string(),
@@ -10,10 +11,10 @@ const messageInsertSchema: Joi.ObjectSchema = Joi.object({
     message: Joi.string()
 })
 class MessageValidator {
-    static async deleteMessageById(payload: any): Promise<boolean>{
-        Logger.info('[Controller][deleteMessageById] Deleting message by id with params', payload)
+    static async deleteMessageById(messageId: string, roomId: string): Promise<boolean>{
+        console.log('[Controller][deleteMessageById] Deleting message by id with params', messageId, roomId)
         try {
-            const test= await messageDeleteSchema.validate({_id: payload})
+            const test= await messageDeleteSchema.validate({messageId: messageId, roomId: roomId})
             if(test.error) throw new Error("validation Error")
             return true
         }catch (e: any) {

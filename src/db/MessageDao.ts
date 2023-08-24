@@ -1,4 +1,4 @@
-import {Db, InsertOneResult, MongoClient, ObjectId, WithId} from "mongodb";
+import {Db, DeleteResult, InsertOneResult, MongoClient, ObjectId, WithId} from "mongodb";
 import IMessage from "../interfaces/IMessage";
 
 class MessageDao {
@@ -19,10 +19,11 @@ class MessageDao {
         }
     }
 
-    static async deleteMessageById (messageIdToDelete: string): Promise<boolean>{
+    static async deleteMessageByIdAndRoomId (messageId: string, roomId: string): Promise<DeleteResult>{
         try {
-
-            return true
+            console.log("[MessageDao][deleteMessageByIdAndRoomId] Deleting message by id and room id with params", roomId, messageId)
+            const result: WithId<any> | null = await this.database.collection(roomId).deleteOne({_id : new ObjectId(messageId)})
+            return result
         }catch (e: any) {
             throw new Error(e)
         }
@@ -31,7 +32,7 @@ class MessageDao {
     static async findMessageByRoomIdAndMessageId(roomId: string, messageId: string): Promise<Document | null> {
         console.log("[MessageDao][findMessageByRoomIdAndMessageId] Finding message by room id and message id", roomId, messageId)
         try {
-            const result: WithId<any> | null  = await this.database.collection(roomId).findOne({_id : new ObjectId(messageId)})
+            const result: WithId<any> | null = await this.database.collection(roomId).findOne({_id : new ObjectId(messageId)})
             return result
         }catch (e: any) {
             throw new Error(e)

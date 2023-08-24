@@ -3,17 +3,18 @@ import MessageDao from "../db/MessageDao";
 import io from "../libs/Socket";
 import messageDao from "../db/MessageDao";
 import IMessage from "../interfaces/IMessage";
-import {InsertOneResult} from "mongodb";
+import {InsertOneResult, DeleteResult} from "mongodb";
 
 class MessageModel {
-    static async messageIdToDelete(messageIdToDelete: string){
+    static async deleteMessageByIdAndRoomId(messageId: string, roomId: string): Promise<DeleteResult>{
         try {
-            //get room id to send message to each other
-            const result: boolean = await MessageDao.deleteMessageById(messageIdToDelete)
-            if (result) io.emit('deleted-message', {
-                roomId: null,
-                messageId: null
+            console.log('[Model][deleteMessageId] Deleting message by id and room id with params', messageId, roomId)
+            const result: DeleteResult = await MessageDao.deleteMessageByIdAndRoomId(messageId, roomId)
+            if (result.acknowledged && result.deletedCount > 0 ) io.emit('deleted-message', {
+                roomId: roomId,
+                messageId: messageId
             });
+            return result
         }catch (e: any) {
             Logger.warn(e)
             throw new Error(e)
